@@ -1,17 +1,28 @@
 class BooksController < ApplicationController
+  before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: [:create, :destroy, :update, :show]
 
   def index
     book_list = Book.all
     render status: 200, json: book_list.select(:id, :title, :genre, :author, :published_year, :price)
+  rescue  ActiveRecord::RecordNotFound
+    render json: "Sorry, No books availaible at this time!"
   end
 
   def create
     new_book = Book.new(new_book_params)
     if new_book.save!
       render status: 200, json: 'New Book has been Added!'
-    else
-      render status: 400, json: 'Could not add book!'
     end
+  rescue ActiveRecord::RecordInvalid
+    render status: 400, json: "#{new_book[:title]} written by #{new_book[:author]} already exits!"
+  end
+
+  def show
+    book = Book.find(params[:id])
+    render json: book.reviewed_books.select(:id, :text)
+  rescue  ActiveRecord::RecordNotFound
+    render json: "Book with id #{params[:id]} does not exist!"
   end
 
   def show_books_by_filter
@@ -28,21 +39,21 @@ class BooksController < ApplicationController
 
   def destroy
     del_book = delete_book_params
-    book = Book.find_by(titte: del_book[:title])
+    book = Book.find_by(title: del_book[:title])
     if Book.destroy(book[:id])
       render status: 200, json: 'Book successfully Deleted!'
-    else
-      render status: 400, json: 'Could not delete book!'
     end
+  rescue NoMethodError
+    render status: 400, json: "Book must exist!"
   end
 
   def update
     book = Book.find(update_book_params[:id])
-    begin book.update(quantity: (book[:quantity] + update_book_params[:quantity]))
+    if book.update(quantity: (book[:quantity] + update_book_params[:quantity]))
       render json: "Quantity updated!" 
-    rescue
-      render json: "Could not update quantity!"
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: "Could not update quantity because this book does not exist!"
   end
 
   private
