@@ -1,6 +1,6 @@
 class BuyedBooksController < ApplicationController
 
-  def availaible_quantity
+  def create
     user = get_current_user
 
     purchase_book = BuyedBook.new({
@@ -13,17 +13,17 @@ class BuyedBooksController < ApplicationController
       book[:quantity] = book[:quantity] - purchase_book[:quantity]
       total_price = book[:price] * purchase_book[:quantity]
       if purchase_book.save! && book.save!
-        render status: 200, json: "You have successfully purchased #{book[:title]} by written by #{book[:author]}. Your total price is #{total_price}." 
+        render status: 200, json: { message: "You have successfully purchased #{book[:title]} by written by #{book[:author]}. Your total price is #{total_price}." }
       else
-        render status: 400, json: "Something went wrong!"
+        render status: 400, json: { message: "Something went wrong!" }
       end
     else
-      render status: 400, json: "Sorry, we are out of stock!"
+      render status: 400, json: { message: "Sorry, we are out of stock!" }
     end
   rescue ActiveRecord::RecordNotFound
-    render status: 400, json: "Could not find a book with id #{purchase_book[:book_id]}"
+    render status: 400, json: { message: "Could not find a book with id #{purchase_book[:book_id]}" }
   rescue ActiveRecord::RecordNotUnique
-    render status: 400, json: "You have already purchased this book" 
+    render status: 400, json: { message: "You have already purchased this book" }
   end
 
   private
