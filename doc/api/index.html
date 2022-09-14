@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Documentation</title>
+  <meta charset="utf-8">
+  <style>
+    
+body {
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+  color: #404040;
+}
+
+.container {
+  width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  zoom: 1;
+}
+
+pre {
+  background-color: #f5f5f5;
+  display: block;
+  padding: 8.5px;
+  margin: 0 0 18px;
+  line-height: 18px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+td.required .name:after {
+  float: right;
+  content: &quot;required&quot;;
+  font-weight: normal;
+  color: #F08080;
+}
+
+a{
+  color: #0069d6;
+  text-decoration: none;
+  line-height: inherit;
+  font-weight: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: #404040;
+}
+
+h1 {
+  margin-bottom: 18px;
+  font-size: 30px;
+  line-height: 36px;
+}
+h2 {
+  font-size: 24px;
+  line-height: 36px;
+}
+h3{
+  font-size: 18px;
+  line-height: 36px;
+}
+h4 {
+  font-size: 16px;
+  line-height: 36px;
+}
+
+table{
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 0;
+  border-collapse: separate;
+  font-size: 13px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+}
+
+table th {
+  padding-top: 9px;
+  font-weight: bold;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+}
+table th+th, table td+td {
+  border-left: 1px solid #ddd;
+}
+table th, table td {
+  padding: 10px 10px 9px;
+  line-height: 18px;
+  text-align: left;
+}
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>API Documentation</h1>
+  
+  <div class="article">
+    <h2>Books</h2>
+
+      <p class="explanation">Books Resource</p>
+
+    <ul>
+      <li>
+        <a href="books/add_a_new_book,_roleadmin.html">Add a new book, Role:admin</a>
+      </li>
+      <li>
+        <a href="books/add_a_new_book,_roleuser.html">Add a new book, Role:user</a>
+      </li>
+      <li>
+        <a href="books/bulk_delete_books,_role_adimn.html">Bulk delete books, Role: Adimn</a>
+      </li>
+      <li>
+        <a href="books/delete_a_book,_role_admin.html">Delete a book, Role: Admin</a>
+      </li>
+      <li>
+        <a href="books/request_to_delete_a_book_when_book_does_not_exist,_role_admin.html">Request to delete a book when book does not exist, Role: Admin</a>
+      </li>
+      <li>
+        <a href="books/request_to_delete_a_book(s)_when_one_of_the_book_does_not_exist,_role_admin.html">Request to delete a book(s) when one of the book does not exist, Role: Admin</a>
+      </li>
+      <li>
+        <a href="books/request_to_update_quantity_of_book_when_book_does_not_exist,_role_admin.html">Request to update quantity of book when book does not exist, Role: Admin</a>
+      </li>
+      <li>
+        <a href="books/show_all_the_reviews_for_a_book.html">Show all the reviews for a book</a>
+      </li>
+      <li>
+        <a href="books/show_the_list_of_all_availaible_books_when_both_genre_and_author_are_given_as_filter.html">Show the list of all availaible books when both genre and author are given as filter</a>
+      </li>
+      <li>
+        <a href="books/show_the_list_of_all_availaible_books_when_no_filter_is_given.html">Show the list of all availaible books when no filter is given</a>
+      </li>
+      <li>
+        <a href="books/show_the_list_of_all_availaible_books_when_one_filter_is_given_(genreauthor).html">Show the list of all availaible books when one filter is given (genre/author)</a>
+      </li>
+      <li>
+        <a href="books/update_quantity_of_existing_book,_role_admin.html">Update quantity of existing book, Role: Admin</a>
+      </li>
+      <li>
+        <a href="books/update_quantity_of_existing_book,_role_user.html">Update quantity of existing book, Role: User</a>
+      </li>
+    </ul>
+  </div>
+  <div class="article">
+    <h2>Buyed Books</h2>
+
+      <p class="explanation">Buyed Books Resource</p>
+
+    <ul>
+      <li>
+        <a href="buyed_books/buy_a_book_(already_purchased_the_same_book).html">Buy a book (Already purchased the same book)</a>
+      </li>
+      <li>
+        <a href="buyed_books/buy_a_book_(book_requested_is_not_availaible).html">Buy a book (Book requested is not availaible)</a>
+      </li>
+      <li>
+        <a href="buyed_books/buy_a_book_(required_quantity_is_more_than_existing).html">Buy a book (Required quantity is more than existing)</a>
+      </li>
+      <li>
+        <a href="buyed_books/buy_a_book_(successful_purchase).html">Buy a book (Successful purchase)</a>
+      </li>
+    </ul>
+  </div>
+  <div class="article">
+    <h2>Reviews</h2>
+
+      <p class="explanation">Reviews Resource</p>
+
+    <ul>
+      <li>
+        <a href="reviews/add_a_review_for_a_book.html">Add a review for a book</a>
+      </li>
+      <li>
+        <a href="reviews/when_user_has_already_added_a_review_for_a_book.html">When User has already added a review for a book</a>
+      </li>
+    </ul>
+  </div>
+  <div class="article">
+    <h2>Users</h2>
+
+      <p class="explanation">Users Resource</p>
+
+    <ul>
+      <li>
+        <a href="users/bulk_delete_users,_role_admin.html">Bulk delete users, Role: Admin</a>
+      </li>
+      <li>
+        <a href="users/delete_a_user,_role_admin.html">Delete a user, Role: Admin</a>
+      </li>
+      <li>
+        <a href="users/request_to_delete_a_user_when_user_does_not_exist,_role_admin.html">Request to delete a user when user does not exist, Role: Admin</a>
+      </li>
+      <li>
+        <a href="users/request_to_delete_a_user(s)_when_one_of_the_user_does_not_exist,_role_admin.html">Request to delete a user(s) when one of the user does not exist, Role: Admin</a>
+      </li>
+      <li>
+        <a href="users/show_all_the_books_puchased_by_a_user.html">Show all the books puchased by a user</a>
+      </li>
+      <li>
+        <a href="users/show_all_the_reviews_puchased_by_a_user.html">Show all the reviews puchased by a user</a>
+      </li>
+      <li>
+        <a href="users/show_all_the_reviews_puchased_by_a_user.html">Show all the reviews puchased by a user</a>
+      </li>
+      <li>
+        <a href="users/sign_in_for_existing_useradmin.html">Sign in for existing user/admin</a>
+      </li>
+      <li>
+        <a href="users/sign_out_for_existing_useradmin.html">Sign out for existing user/admin</a>
+      </li>
+      <li>
+        <a href="users/sign_up_for_new_useradmin.html">Sign up for new user/admin</a>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
