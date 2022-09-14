@@ -13,9 +13,7 @@ class BooksController < ApplicationController
     else
       book_list = Book.all
     end
-    render json: (book_list.empty?) ? { message: "There are no books availaible with this filter" } : { message: book_list.select(:id, :title, :author, :genre) }
-  rescue  ActiveRecord::RecordNotFound
-    render status: 400, json: { message: "Sorry, No books availaible at this time!" }
+    render status: 200, json: (book_list.empty?) ? { message: "There are no books availaible with this filter" } : { books: book_list.select(:id, :title, :author, :genre) }
   end
 
   def create
@@ -34,9 +32,9 @@ class BooksController < ApplicationController
 
   def reviews
     book = Book.find(params[:id])
-    render json: book.reviewed_books.select(:id, :text)
+    render status: 200, json: { reviews: book.reviewed_books.select(:id, :text) }
   rescue  ActiveRecord::RecordNotFound
-    render json: { message: "Book with id #{params[:id]} does not exist!" }
+    render status: 404, json: { message: "Book with id #{params[:id]} does not exist!" }
   end
 
   def destroy
@@ -49,21 +47,21 @@ class BooksController < ApplicationController
       render status: 400, json: { message: "Cannot delete book. You are not an admin"}
     end
   rescue ActiveRecord::RecordNotFound
-    render status: 400, json: { message: "Book(s) must exist!" }
+    render status: 404, json: { message: "Book(s) must exist!" }
   end
 
   def update
     user = get_current_user
     if user.role == "admin"
       book = Book.find(params[:id])
-      if book.update(quantity: (book[:quantity] + update_book_params[:quantity]))
-        render json: { message: "Quantity updated!" }
+      if book.update(quantity: (book[:quantity] + update_book_params[:quantity].to_i))
+        render status: 200, json: { message: "Quantity updated!" }
       end
     else
       render status: 400, json: { message: "Cannot add quantity to book. You are not an admin" }
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { message: "Could not update quantity because this book does not exist!" }
+    render status: 404, json: { message: "Could not update quantity because this book does not exist!" }
   end
 
   private

@@ -31,6 +31,6 @@ class UsersController < ApplicationController
       render status: 400, json: { message: "Invalid action! You are not an admin."}
     end
   rescue ActiveRecord::RecordNotFound
-    render status: 400, json: { message: "User(s) must exist!" }
+    render status: 404, json: { message: "User(s) must exist!" }
   end
 end
