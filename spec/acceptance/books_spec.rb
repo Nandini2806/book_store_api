@@ -326,6 +326,36 @@ resource "Books" do
       end
     end
 
+    context '400' do
+      before do
+        User.destroy_all
+        @user = User.create(
+          user_name: "user1", 
+          role: "user", 
+          full_name: "user1", 
+          email: "user1@gmail.com", 
+          password: "123456", 
+          password_confirmation: "123456"
+        )
+        @book = Book.create(
+          title: "The dark night",
+          genre: "Thrill",
+          author: "Jane Austen",
+          published_year: "1920",
+          price: "256",
+          quantity: 100
+        )
+        auth_headers_user = @user.create_new_auth_token
+        header "Authorization", auth_headers_user['Authorization']
+      end
+      let (:id) { @book.id }
+      it "Delete a book, Role: User" do
+        do_request()
+        status.should eq(400)
+        response_body.should eq("{\"message\":\"Cannot delete book. You are not an admin\"}")
+      end
+    end
+
     context '404' do
       before do
         User.destroy_all

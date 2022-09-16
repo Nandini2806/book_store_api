@@ -111,8 +111,8 @@ table th, table td {
         <p class="explanation">Users Resource</p>
 
       <div class="article">
-        <h2>Delete a user, Role: Admin</h2>
-        <h3>DELETE /users/:id</h3>
+        <h2>Sign up for new user/admin (if user has entered user_name or email with trailing/leading spaces)</h2>
+        <h3>POST /auth</h3>
 
 
 
@@ -120,15 +120,16 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Version: HTTP/1.0
-Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJXb2ZXOGROeGdrVTF4RHdHVDAySk5RIiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6IlpyTTlRZlJmazRhVWd1aFVEaFhnRkEiLCJleHBpcnkiOiIxNjY0NTE0MTkwIiwidWlkIjoiYWRtaW4xQGdtYWlsLmNvbSJ9
 Host: example.org
 Content-Type: application/x-www-form-urlencoded
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">DELETE /users/32</pre>
+          <pre class="request route highlight">POST /auth</pre>
 
 
+            <h4>Body</h4>
+            <pre class="request body">user_name=+admin21&full_name=admin1&role=admin&email=+admi2n1%40gmail.com+&password=123456&password_confirmation=123456</pre>
 
 
             <h3>Response</h3>
@@ -139,18 +140,18 @@ X-Content-Type-Options: nosniff
 X-Download-Options: noopen
 X-Permitted-Cross-Domain-Policies: none
 Referrer-Policy: strict-origin-when-cross-origin
-Content-Type: application/json; charset=utf-8
-access-token: WofW8dNxgkU1xDwGT02JNQ
+access-token: VGmO0ez_I0TCcDNcbupHWw
 token-type: Bearer
-client: ZrM9QfRfk4aUguhUDhXgFA
-expiry: 1664514190
-uid: admin1@gmail.com
-Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJXb2ZXOGROeGdrVTF4RHdHVDAySk5RIiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6IlpyTTlRZlJmazRhVWd1aFVEaFhnRkEiLCJleHBpcnkiOiIxNjY0NTE0MTkwIiwidWlkIjoiYWRtaW4xQGdtYWlsLmNvbSJ9
-ETag: W/&quot;9bbc8795bd185ab78724247df46020e9&quot;
+client: u8CTlCD2A2lLZXyDlr4QzQ
+expiry: 1664514186
+uid: admi2n1@gmail.com
+Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJWR21PMGV6X0kwVENjRE5jYnVwSFd3IiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6InU4Q1RsQ0QyQTJsTFpYeURscjRRelEiLCJleHBpcnkiOiIxNjY0NTE0MTg2IiwidWlkIjoiYWRtaTJuMUBnbWFpbC5jb20ifQ==
+Content-Type: application/json; charset=utf-8
+ETag: W/&quot;f0b70e4354c99122ecaa35a12d7a83c9&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 14a38a8e-c103-4163-9c46-b75fc3d8b700
-X-Runtime: 0.014301
-Content-Length: 43</pre>
+X-Request-Id: a4adc240-9b4c-465f-a9f1-80a3e2c41671
+X-Runtime: 0.318130
+Content-Length: 278</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>

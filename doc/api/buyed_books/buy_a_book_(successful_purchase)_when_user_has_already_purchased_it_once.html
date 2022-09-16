@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Users API</title>
+    <title>Buyed Books API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,13 +106,13 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Users API</h1>
+      <h1>Buyed Books API</h1>
 
-        <p class="explanation">Users Resource</p>
+        <p class="explanation">Buyed Books Resource</p>
 
       <div class="article">
-        <h2>Delete a user, Role: Admin</h2>
-        <h3>DELETE /users/:id</h3>
+        <h2>Buy a book (Successful purchase) when user has already purchased it once</h2>
+        <h3>POST /buyed_books</h3>
 
 
 
@@ -120,15 +120,17 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Version: HTTP/1.0
-Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJXb2ZXOGROeGdrVTF4RHdHVDAySk5RIiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6IlpyTTlRZlJmazRhVWd1aFVEaFhnRkEiLCJleHBpcnkiOiIxNjY0NTE0MTkwIiwidWlkIjoiYWRtaW4xQGdtYWlsLmNvbSJ9
+Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJnUVRvX2lYbnZOQ2lNbHJhRWlEbmF3IiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6InczNU92R2NDLU5vc3RjaEpHMllLQ3ciLCJleHBpcnkiOiIxNjY0NTE0MTgzIiwidWlkIjoidGVzdDFAZ21haWwuY29tIn0=
 Host: example.org
 Content-Type: application/x-www-form-urlencoded
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">DELETE /users/32</pre>
+          <pre class="request route highlight">POST /buyed_books</pre>
 
 
+            <h4>Body</h4>
+            <pre class="request body">buyed_book[book_id]=20&buyed_book[quantity]=2</pre>
 
 
             <h3>Response</h3>
@@ -140,17 +142,17 @@ X-Download-Options: noopen
 X-Permitted-Cross-Domain-Policies: none
 Referrer-Policy: strict-origin-when-cross-origin
 Content-Type: application/json; charset=utf-8
-access-token: WofW8dNxgkU1xDwGT02JNQ
+access-token: gQTo_iXnvNCiMlraEiDnaw
 token-type: Bearer
-client: ZrM9QfRfk4aUguhUDhXgFA
-expiry: 1664514190
-uid: admin1@gmail.com
-Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJXb2ZXOGROeGdrVTF4RHdHVDAySk5RIiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6IlpyTTlRZlJmazRhVWd1aFVEaFhnRkEiLCJleHBpcnkiOiIxNjY0NTE0MTkwIiwidWlkIjoiYWRtaW4xQGdtYWlsLmNvbSJ9
-ETag: W/&quot;9bbc8795bd185ab78724247df46020e9&quot;
+client: w35OvGcC-NostchJG2YKCw
+expiry: 1664514183
+uid: test1@gmail.com
+Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiJnUVRvX2lYbnZOQ2lNbHJhRWlEbmF3IiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6InczNU92R2NDLU5vc3RjaEpHMllLQ3ciLCJleHBpcnkiOiIxNjY0NTE0MTgzIiwidWlkIjoidGVzdDFAZ21haWwuY29tIn0=
+ETag: W/&quot;149b5809b0ce30eaf0af9b4d7c4dfa84&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 14a38a8e-c103-4163-9c46-b75fc3d8b700
-X-Runtime: 0.014301
-Content-Length: 43</pre>
+X-Request-Id: d7ed7f07-4646-425c-a81a-7a63722f7f10
+X-Runtime: 0.021925
+Content-Length: 110</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Buyed Books API</title>
+    <title>Users API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,13 +106,13 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Buyed Books API</h1>
+      <h1>Users API</h1>
 
-        <p class="explanation">Buyed Books Resource</p>
+        <p class="explanation">Users Resource</p>
 
       <div class="article">
-        <h2>Buy a book (Already purchased the same book)</h2>
-        <h3>POST /buyed_books</h3>
+        <h2>Sign up for new user/admin (if user has entered user_name or email is already being taken)</h2>
+        <h3>POST /auth</h3>
 
 
 
@@ -120,17 +120,16 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Version: HTTP/1.0
-Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiIyYmppSDcyWlFBQS01MmFsVGJLODl3IiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6ImJjYUJid0QyOVllSUhnYXlHclE5a1EiLCJleHBpcnkiOiIxNjY0MzQzNDExIiwidWlkIjoidGVzdDFAZ21haWwuY29tIn0=
 Host: example.org
 Content-Type: application/x-www-form-urlencoded
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">POST /buyed_books</pre>
+          <pre class="request route highlight">POST /auth</pre>
 
 
             <h4>Body</h4>
-            <pre class="request body">buyed_book[book_id]=866&buyed_book[quantity]=2</pre>
+            <pre class="request body">user_name=+admin21&full_name=admin1&role=admin&email=+admi2n1%40gmail.com+&password=123456&password_confirmation=123456</pre>
 
 
             <h3>Response</h3>
@@ -142,18 +141,12 @@ X-Download-Options: noopen
 X-Permitted-Cross-Domain-Policies: none
 Referrer-Policy: strict-origin-when-cross-origin
 Content-Type: application/json; charset=utf-8
-access-token: 2bjiH72ZQAA-52alTbK89w
-token-type: Bearer
-client: bcaBbwD29YeIHgayGrQ9kQ
-expiry: 1664343411
-uid: test1@gmail.com
-Authorization: Bearer eyJhY2Nlc3MtdG9rZW4iOiIyYmppSDcyWlFBQS01MmFsVGJLODl3IiwidG9rZW4tdHlwZSI6IkJlYXJlciIsImNsaWVudCI6ImJjYUJid0QyOVllSUhnYXlHclE5a1EiLCJleHBpcnkiOiIxNjY0MzQzNDExIiwidWlkIjoidGVzdDFAZ21haWwuY29tIn0=
 Cache-Control: no-cache
-X-Request-Id: b8cc7605-e6d2-4f19-972b-4945a9ecc041
-X-Runtime: 0.013725
-Content-Length: 50</pre>
+X-Request-Id: 81113b91-8b0a-43e8-95ce-9779dd24dcbd
+X-Runtime: 0.312782
+Content-Length: 386</pre>
             <h4>Status</h4>
-            <pre class="response status">500 Internal Server Error</pre>
+            <pre class="response status">422 Unprocessable Entity</pre>
               <h4>Body</h4>
               <pre class="response body">[binary data]</pre>
       </div>

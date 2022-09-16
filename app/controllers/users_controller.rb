@@ -1,15 +1,18 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:books]
 
   def books
-    user = get_current_user
-    purchase_books_id = BuyedBook.where(user_id: user.id)
-    book_list = []
-    purchase_books_id.each do |book|
-      b = Book.find(book[:book_id])
-      book_list.append({ book_id: b[:id], title: b[:title], author: b[:author] })
+    purchase_books_id = BuyedBook.where(user_id: params[:id])
+    if purchase_books_id == []
+      render status: 400, json: {message: "User does not exist"}
+    else
+      book_list = []
+      purchase_books_id.each do |book|
+        b = Book.find(book[:book_id])
+        book_list.append({ book_id: b[:id], title: b[:title], author: b[:author], price: b[:price] })
+      end
+      render status: 200, json: { books_purchased: book_list }
     end
-    render status: 200, json: { books_purchased: book_list }
   end
 
   def reviews
