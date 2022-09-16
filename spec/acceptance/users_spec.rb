@@ -126,11 +126,50 @@ resource "Users" do
           role: "admin",
           email: "admi2n1@gmail.com",
           password: "123456",
-          password_confirmation: "123456",
-          confirm_success_url: "/"
+          password_confirmation: "123456"
         }
         do_request(user_params)
         status.should eq(200)
+      end
+    end
+
+    context '200' do
+      it 'Sign up for new user/admin (if user has entered user_name or email with trailing/leading spaces)' do
+        user_params = {
+          user_name: " admin21",
+          full_name: "admin1",
+          role: "admin",
+          email: " admi2n1@gmail.com ",
+          password: "123456",
+          password_confirmation: "123456"
+        }
+        do_request(user_params)
+        status.should eq(200)
+      end
+    end
+
+    context '422' do
+      before do
+        User.create(
+          user_name: "admin21",
+          full_name: "admin1",
+          role: "admin",
+          email: "admi2n1@gmail.com",
+          password: "123456",
+          password_confirmation: "123456"
+        )
+      end
+      it 'Sign up for new user/admin (if user has entered user_name or email is already being taken)' do
+        user_params = {
+          user_name: " admin21",
+          full_name: "admin1",
+          role: "admin",
+          email: " admi2n1@gmail.com ",
+          password: "123456",
+          password_confirmation: "123456"
+        }
+        do_request(user_params)
+        status.should eq(422)
       end
     end
   end
@@ -150,6 +189,27 @@ resource "Users" do
       it 'Sign in for existing user/admin' do
         user_params = {
           email: "admi2n1@gmail.com",
+          password: "123456"
+        }
+        do_request(user_params)
+        status.should eq(200)
+      end
+    end
+
+    context '200' do
+      before do 
+        User.create(
+          user_name: "admin21",
+          full_name: "admin1",
+          role: "admin",
+          email: "admi2n1@gmail.com",
+          password: "123456",
+          password_confirmation: "123456",
+        )
+      end
+      it 'Sign in for new user/admin (if user has entered email with trailing/leading spaces)' do
+        user_params = {
+          email: " admi2n1@gmail.com ",
           password: "123456"
         }
         do_request(user_params)
@@ -206,7 +266,7 @@ resource "Users" do
       it "Delete a user, Role: Admin" do
         do_request()
         status.should eq(200)
-        response_body.should eq("{\"message\":\"User(s) successfully Deleted!\"}")
+        response_body.should eq('{"message":"User(s) successfully Deleted!"}')
       end
     end
 
@@ -245,6 +305,36 @@ resource "Users" do
         do_request()
         status.should eq(200)
         response_body.should eq("{\"message\":\"User(s) successfully Deleted!\"}")
+      end
+    end
+
+    context '400' do
+      before do
+        User.destroy_all
+        @user1 = User.create(
+          user_name: "testuser1",
+          full_name: "test user1",
+          role: "user",
+          email: "testuser1@gmail.com",
+          password: "123456",
+          password_confirmation: "123456",
+        )
+        @user2 = User.create(
+          user_name: "user1", 
+          role: "user", 
+          full_name: "user 1", 
+          email: "user1@gmail.com", 
+          password: "123456", 
+          password_confirmation: "123456"
+        )
+        auth_headers_user = @user2.create_new_auth_token
+        header "Authorization", auth_headers_user['Authorization']
+      end
+      let(:id) {@user1.id}
+      it "Delete a user, Role: User" do
+        do_request()
+        status.should eq(400)
+        response_body.should eq("{\"message\":\"Invalid action! You are not an admin.\"}")
       end
     end
 
