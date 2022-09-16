@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, except: [:books]
+  before_action :authenticate_user!, except: [:books, :reviews]
 
   def books
     purchase_books_id = BuyedBook.where(user_id: params[:id])
@@ -16,12 +16,14 @@ class UsersController < ApplicationController
   end
 
   def reviews
-    user = get_current_user
+    user = User.find(params[:id])
     if user.reviewed_books.empty?
       render status: 400, json: { message: "You haven't added any reviews yet" } 
     else
-      render status: 200, json: { reviews: "#{user.reviewed_books.select(:id, :book_id, :text)}" }
+      render status: 200, json: { reviews: user.reviewed_books.select(:id, :book_id, :text) }
     end
+  rescue ActiveRecord::RecordNotFound
+    render status: 404, json: { message: "User does not exist" }
   end
 
   def destroy

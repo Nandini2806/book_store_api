@@ -13,7 +13,7 @@ class BooksController < ApplicationController
     else
       book_list = Book.all
     end
-    render status: 200, json: (book_list.empty?) ? { message: "There are no books availaible with this filter" } : { books: book_list.select(:id, :title, :author, :genre) }
+    render status: 200, json: (book_list.empty?) ? { message: "There are no books availaible with this filter" } : { books: book_list.select(:id, :title, :author, :genre, :quantity) }
   end
 
   def create
@@ -55,7 +55,7 @@ class BooksController < ApplicationController
     if user.role == "admin"
       book = Book.find(params[:id])
       if book.update(quantity: (book[:quantity] + update_book_params[:quantity].to_i))
-        render status: 200, json: { message: "Quantity updated!" }
+        render status: 200, json: { message: "Quantity updated!, Avalaible books : #{book[:quantity]}" }
       end
     else
       render status: 400, json: { message: "Cannot add quantity to book. You are not an admin" }
