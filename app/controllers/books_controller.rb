@@ -13,7 +13,7 @@ class BooksController < ApplicationController
     else
       book_list = Book.all
     end
-    render status: 200, json: (book_list.empty?) ? { message: "There are no books availaible with this filter" } : { books: book_list.select(:id, :title, :author, :genre, :quantity) }
+    render status: 200, json: (book_list.empty?) ? { message: I18n.t('books.success.no_books') } : { books: book_list.as_json(only: [:id, :title, :author, :genre, :quantity]) }
   end
 
   def create
@@ -21,47 +21,51 @@ class BooksController < ApplicationController
     if user.role == "admin"
       new_book = Book.new(new_book_params)
       if new_book.save!
-        render status: 200, json: { message: 'New Book has been Added!' }
+        render status: 200, json: { message: I18n.t('books.success.create') }
       end
     else
-      render status: 400, json: { message: "Cannot add book. You are not an admin"}
+      render status: 400, json: { message: I18n.t('books.error.not_admin')}
     end
   rescue ActiveRecord::RecordInvalid
-    render status: 400, json: { message: "#{new_book[:title]} written by #{new_book[:author]} already exits!" }
+    render status: 400, json: { message: I18n.t('books.error.exists', new_book_title: new_book[:title], new_book_author: new_book[:author]) }
   end
 
   def reviews
     book = Book.find(params[:id])
     render status: 200, json: { reviews: book.reviewed_books.select(:id, :text) }
   rescue  ActiveRecord::RecordNotFound
-    render status: 404, json: { message: "Book with id #{params[:id]} does not exist!" }
+    render status: 404, json: { message: I18n.t('books.error.not_exists', id: params[:id]) }
   end
 
   def destroy
     user = get_current_user
     if user.role == "admin"
       if Book.find(params[:id].split(',')).each do |book| book.destroy end
-        render status: 200, json: { message: 'Book(s) successfully Deleted!' }
+        render status: 200, json: { message: I18n.t('books.success.destroy') }
       end
     else
-      render status: 400, json: { message: "Cannot delete book. You are not an admin"}
+      render status: 400, json: { message: I18n.t('books.error.not_admin') }
     end
   rescue ActiveRecord::RecordNotFound
-    render status: 404, json: { message: "Book(s) must exist!" }
+    render status: 404, json: { message: I18n.t('books.error.not_exists') }
   end
 
   def update
     user = get_current_user
     if user.role == "admin"
-      book = Book.find(params[:id])
-      if book.update(quantity: (book[:quantity] + update_book_params[:quantity].to_i))
-        render status: 200, json: { message: "Quantity updated!, Avalaible books : #{book[:quantity]}" }
+      if update_book_params[:quantity].to_i <= 0
+        render status: 400, json: { message: I18n.t('books.error.update') }
+      else
+        book = Book.find(params[:id])
+        if book.update(quantity: (book[:quantity] + update_book_params[:quantity].to_i))
+          render status: 200, json: { message: I18n.t('books.success.update', quantity: book[:quantity]) }
+        end
       end
     else
-      render status: 400, json: { message: "Cannot add quantity to book. You are not an admin" }
+      render status: 400, json: { message: I18n.t('books.error.not_admin') }
     end
   rescue ActiveRecord::RecordNotFound
-    render status: 404, json: { message: "Could not update quantity because this book does not exist!" }
+    render status: 404, json: { message: I18n.t('books.error.not_exists') }
   end
 
   private
@@ -77,5 +81,4 @@ class BooksController < ApplicationController
   def update_book_params
     params.require(:book).permit(:quantity)
   end
-
 end

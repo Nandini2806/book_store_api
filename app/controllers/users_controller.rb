@@ -2,40 +2,41 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:books, :reviews]
 
   def books
-    purchase_books_id = BuyedBook.where(user_id: params[:id])
-    if purchase_books_id == []
-      render status: 400, json: {message: "User does not exist"}
+    user = User.find params[:id]
+    books_of_user = user.buyed_books.as_json
+    if books_of_user.length == 0
+      render status: 200, json: { message: I18n.t('users.success.empty', user_name: user[:user_name]) }
     else
-      book_list = []
-      purchase_books_id.each do |book|
-        b = Book.find(book[:book_id])
-        book_list.append({ book_id: b[:id], title: b[:title], author: b[:author], price: b[:price] })
+      books_of_user.each do |book|
+        book["title"] = Book.select(:title).find(book["book_id"])["title"]
       end
-      render status: 200, json: { books_purchased: book_list }
+      render status: 200, json: books_of_user.collect{|a| a.slice('id', 'user_id', 'book_id', 'title')}
     end
+  rescue ActiveRecord::RecordNotFound => e
+    render status: 404, json: { message: e}
   end
 
   def reviews
     user = User.find(params[:id])
     if user.reviewed_books.empty?
-      render status: 400, json: { message: "You haven't added any reviews yet" } 
+      render status: 400, json: { message: I18n.t('users.error.not_exists') } 
     else
       render status: 200, json: { reviews: user.reviewed_books.select(:id, :book_id, :text) }
     end
   rescue ActiveRecord::RecordNotFound
-    render status: 404, json: { message: "User does not exist" }
+    render status: 404, json: { message: I18n.t('users.error.exists') }
   end
 
   def destroy
     user = get_current_user
     if user.role == "admin"
       if User.find(params[:id].split(',')).each do |user| user.destroy end
-        render status: 200, json: { message: 'User(s) successfully Deleted!' }
+        render status: 200, json: { message: I18n.t('users.success.destroy') }
       end
     else
-      render status: 400, json: { message: "Invalid action! You are not an admin."}
+      render status: 400, json: { message: I18n.t('users.error.not_admin')}
     end
   rescue ActiveRecord::RecordNotFound
-    render status: 404, json: { message: "User(s) must exist!" }
+    render status: 404, json: { message: I18n.t('users.error.exists') }
   end
 end

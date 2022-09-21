@@ -31,3 +31,40 @@
 
 en:
   hello: "Hello world"
+
+  books:
+    success:
+      create: "New Book has been Added!"
+      no_books: "There are no books availaible with this filter"
+      destroy: 'Book(s) successfully Deleted!'
+      update: 'Quantity updated! Availaible books: %{quantity}'
+    error:
+      update: "Please enter a valid quantity!"
+      not_admin: "Invalid action! You are not an admin!"
+      exists: "%{new_book_title} written by %{new_book_author} already exits!"
+      not_exists: "Book(s) must exist!"
+  
+  buyed_books:
+    success:
+      create: "You have successfully purchased %{title}. Your total price is %{total_price}"
+    error:
+      create: "Sorry, we are out of stock!"
+      quantity: "Please enter valid quantity!"
+      not_exists: "Book must exist!"
+
+  reviews: 
+    success:
+      create: "Review for user %{user_id} and book %{book_id} is successfully added!"
+    error:
+      create: "Book must exist!"
+      exists: "You have already added review!"
+      text: "Please add some text for review!"
+
+  users:
+    success:
+      destroy: 'User(s) successfully Deleted!'
+      empty: "No books of user %{user_name}"
+    error:
+      exists: "User(s) must exist!"
+      not_exists: "You haven't added any reviews yet"
+      not_admin: "Invalid action! You are not an admin."
