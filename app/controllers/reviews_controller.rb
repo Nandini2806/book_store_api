@@ -2,7 +2,7 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    user = get_current_user
+    user = current_user
       if Book.exists? reviewed_book_params[:book_id]
         if reviewed_book_params[:text]
           review = ReviewedBook.new({user_id: user.id,

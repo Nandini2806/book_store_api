@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = get_current_user
+    user = current_user
     if user.role == "admin"
       if User.find(params[:id].split(',')).each do |user| user.destroy end
         render status: 200, json: { message: I18n.t('users.success.destroy') }

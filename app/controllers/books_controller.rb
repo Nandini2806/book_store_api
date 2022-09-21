@@ -17,7 +17,7 @@ class BooksController < ApplicationController
   end
 
   def create
-    user = get_current_user
+    user = current_user
     if user.role == "admin"
       new_book = Book.new(new_book_params)
       if new_book.save!
@@ -38,7 +38,7 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    user = get_current_user
+    user = current_user
     if user.role == "admin"
       if Book.find(params[:id].split(',')).each do |book| book.destroy end
         render status: 200, json: { message: I18n.t('books.success.destroy') }
@@ -51,7 +51,7 @@ class BooksController < ApplicationController
   end
 
   def update
-    user = get_current_user
+    user = current_user
     if user.role == "admin"
       if update_book_params[:quantity].to_i <= 0
         render status: 400, json: { message: I18n.t('books.error.update') }
