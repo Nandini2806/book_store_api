@@ -39,7 +39,7 @@ resource "Buyed Books" do
         }
         do_request(book_params)
         status.should eq(200)
-        response_body.should eq("{\"message\":\"You have successfully purchased #{@book[:title]} by written by #{@book[:author]}. Your total price is 512.\"}")
+        response_body.should eq('{"message":"You have successfully purchased End of the world. Your total price is 512"}')
       end
     end
 
@@ -82,7 +82,7 @@ resource "Buyed Books" do
         }
         do_request(book_params)
         status.should eq(200)
-        response_body.should eq("{\"message\":\"You have successfully purchased #{@book[:title]} by written by #{@book[:author]}. Your total price is 512.\"}")
+        response_body.should eq('{"message":"You have successfully purchased End of the world. Your total price is 512"}')
       end
     end
 
@@ -119,7 +119,7 @@ resource "Buyed Books" do
         }
         do_request(book_params)
         status.should eq(400)
-        response_body.should eq("{\"message\":\"Sorry, we are out of stock!\"}")
+        response_body.should eq('{"message":"Sorry, we are out of stock!"}')
       end
     end
 
@@ -156,7 +156,7 @@ resource "Buyed Books" do
         }
         do_request(book_params)
         status.should eq(404)
-        response_body.should eq("{\"message\":\"Could not find a book with id 88\"}")
+        response_body.should eq('{"message":"Book must exist!"}')
       end
     end
   end

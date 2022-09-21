@@ -79,7 +79,7 @@ resource "Reviews" do
         }
         do_request(review_params)
         status.should eq(400)
-        response_body.should eq("{\"message\":\"You have already added review\"}")
+        response_body.should eq('{"message":"You have already added review!"}')
       end
     end
   end

@@ -39,7 +39,7 @@ resource "Books" do
       it 'Show the list of all availaible books when no filter is given' do
         do_request()
         status.should eq(200)
-        books = Book.all.select(:id, :title, :genre, :author).as_json
+        books = Book.all.select(:id, :title, :genre, :author, :quantity).as_json
         s = "{\"books\":#{books}}".gsub "=>", ":"
         response_body.should eq(s.gsub ", ", ",")
       end
@@ -47,7 +47,7 @@ resource "Books" do
       it 'Show the list of all availaible books when one filter is given (genre/author)' do
         do_request("genre": "Thrill")
         status.should eq(200)
-        books = Book.where(genre: "Thrill").select(:id, :title, :genre, :author).as_json
+        books = Book.where(genre: "Thrill").select(:id, :title, :genre, :author, :quantity).as_json
         s = "{\"books\":#{books}}".gsub "=>", ":"
         response_body.should eq(s.gsub ", ", ",")
       end
@@ -55,8 +55,8 @@ resource "Books" do
       it 'Show the list of all availaible books when both genre and author are given as filter' do
         do_request("genre": "Thrill", "author": "Shiv khera")
         status.should eq(200)
-        books = Book.where(genre: "Thrill", author: "Shiv khera").select(:id, :title, :genre, :author).as_json
-        response_body.should eq("{\"message\":\"There are no books availaible with this filter\"}")
+        books = Book.where(genre: "Thrill", author: "Shiv khera").select(:id, :title, :genre, :author, :quantity).as_json
+        response_body.should eq('{"message":"There are no books availaible with this filter"}')
       end
     end    
   end
@@ -89,7 +89,7 @@ resource "Books" do
           }
         do_request(params_obj)
         status.should eq(200)
-        response_body.should eq("{\"message\":\"New Book has been Added!\"}")
+        response_body.should eq('{"message":"New Book has been Added!"}')
       end
     end
 
@@ -120,7 +120,7 @@ resource "Books" do
           }
         do_request(params_obj)
         status.should eq(400)
-        response_body.should eq("{\"message\":\"Cannot add book. You are not an admin\"}")
+        response_body.should eq('{"message":"Invalid action! You are not an admin!"}')
       end
     end
   end
@@ -192,7 +192,7 @@ resource "Books" do
       it "Update quantity of existing book, Role: Admin" do
         do_request({book: {quantity: 24 }})
         status.should eq(200)
-        response_body.should eq("{\"message\":\"Quantity updated!\"}")
+        response_body.should eq('{"message":"Quantity updated! Availaible books: 124"}')
       end
     end
 
@@ -222,7 +222,7 @@ resource "Books" do
       it "Update quantity of existing book, Role: User" do
         do_request({book: {quantity: 24 }})
         status.should eq(400)
-        response_body.should eq("{\"message\":\"Cannot add quantity to book. You are not an admin\"}")
+        response_body.should eq('{"message":"Invalid action! You are not an admin!"}')
       end
     end
 
@@ -252,7 +252,7 @@ resource "Books" do
       it "Request to update quantity of book when book does not exist, Role: Admin" do
         do_request({book: {quantity: 24 }})
         status.should eq(404)
-        response_body.should eq("{\"message\":\"Could not update quantity because this book does not exist!\"}")
+        response_body.should eq('{"message":"Book(s) must exist!"}')
       end
     end
   end
@@ -284,7 +284,7 @@ resource "Books" do
       it "Delete a book, Role: Admin" do
         do_request()
         status.should eq(200)
-        response_body.should eq("{\"message\":\"Book(s) successfully Deleted!\"}")
+        response_body.should eq('{"message":"Book(s) successfully Deleted!"}')
       end
     end
 
@@ -322,7 +322,7 @@ resource "Books" do
       it "Bulk delete books, Role: Adimn" do
         do_request()
         status.should eq(200)
-        response_body.should eq("{\"message\":\"Book(s) successfully Deleted!\"}")
+        response_body.should eq('{"message":"Book(s) successfully Deleted!"}')
       end
     end
 
@@ -352,7 +352,7 @@ resource "Books" do
       it "Delete a book, Role: User" do
         do_request()
         status.should eq(400)
-        response_body.should eq("{\"message\":\"Cannot delete book. You are not an admin\"}")
+        response_body.should eq('{"message":"Invalid action! You are not an admin!"}')
       end
     end
 
@@ -382,7 +382,7 @@ resource "Books" do
       it "Request to delete a book when book does not exist, Role: Admin" do
         do_request()
         status.should eq(404)
-        response_body.should eq("{\"message\":\"Book(s) must exist!\"}")
+        response_body.should eq('{"message":"Book(s) must exist!"}')
       end
     end
 
@@ -420,7 +420,7 @@ resource "Books" do
       it "Request to delete a book(s) when one of the book does not exist, Role: Admin" do
         do_request()
         status.should eq(404)
-        response_body.should eq("{\"message\":\"Book(s) must exist!\"}")
+        response_body.should eq('{"message":"Book(s) must exist!"}')
       end
     end
   end
